@@ -8,7 +8,7 @@ public class CubeManager : MonoBehaviour
     private CubeColorChanger _colorChanger;
     private CubePhysics _physics;
 
-        void Start()
+    private void Start()
     {
         _spawner = GetComponent<CubeSpawner>();
         _colorChanger = GetComponent<CubeColorChanger>();
