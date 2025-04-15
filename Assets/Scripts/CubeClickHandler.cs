@@ -2,16 +2,19 @@ using UnityEngine;
 
 public class CubeClickHandler : MonoBehaviour
 {
-    [SerializeField] private CubeExplosion _explosion;
+    [SerializeField] private Cube _cube;
 
     private void Awake()
     {
-        if (_explosion == null && TryGetComponent(out CubeExplosion explosion))
-            _explosion = explosion;
+        if (_cube == null && TryGetComponent(out Cube cube))
+            _cube = cube;
     }
 
     private void OnMouseDown()
     {
-        _explosion.TryExplodeOrDestroy();
+        if (_cube == null)
+            return;
+        
+        _cube.HandleClick();
     }
 }

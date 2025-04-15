@@ -2,17 +2,47 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _cubePrefab;
+    private const int MaxSeparationChance = 100;
+
+    [SerializeField] private CubeFactory _factory;
     [SerializeField] private float _spawnOffsetRadius = 0.2f;
     [SerializeField] private float _scaleFactor = 0.5f;
+    [SerializeField] private int _minCubesNumber = 2;
+    [SerializeField] private int _maxCubesNumber = 6;
 
-    public GameObject Spawn(Transform source)
+    public void SpawnInitialCubes(Cube[] cubes)
     {
-        Vector3 offset = Random.insideUnitSphere * _spawnOffsetRadius;
-        GameObject cube = Instantiate(_cubePrefab, source.position + offset, Quaternion.identity);
+        foreach (var cube in cubes)
+        {
+            cube.Initialize(MaxSeparationChance);
+            cube.OnClicked += HandleCubeClicked;
+        }
+    }
 
-        cube.transform.localScale = source.localScale * _scaleFactor;
+    private void HandleCubeClicked(Cube clickedCube)
+    {
+        clickedCube.OnClicked -= HandleCubeClicked;
 
-        return cube;
+        if (clickedCube.ExplosionLogic.ShouldExplode() == true)
+            SpawnNewCubes(clickedCube);
+
+        Destroy(clickedCube.gameObject);
+    }
+
+    private void SpawnNewCubes(Cube cubeParent)
+    {
+        int cubesCount = Random.Range(_minCubesNumber, _maxCubesNumber + 1);
+        int newChance = cubeParent.ExplosionLogic.GetNextChance();
+        
+        Vector3 origin = cubeParent.transform.position;
+        Vector3 newScale = cubeParent.transform.localScale * _scaleFactor;
+
+        for (int i = 0; i < cubesCount; i++)
+        {
+            Vector3 offset = Random.insideUnitSphere * _spawnOffsetRadius;
+            Cube newCube = _factory.CreateCube(origin + offset, newScale, newChance, origin);
+
+            newCube.OnClicked += HandleCubeClicked;
+        }
     }
 }
