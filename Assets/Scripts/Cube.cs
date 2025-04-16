@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(CubeClickHandler), typeof(CubeColorizer), typeof(CubeExplosionLogic))]
 public class Cube : MonoBehaviour
 {
-    public event Action<Cube> OnClicked;
+    public event Action<Cube> Clicked;
 
     public CubeColorizer Colorizer {get; private set; }
     public CubeExplosionLogic ExplosionLogic { get; private set; }
@@ -23,6 +23,6 @@ public class Cube : MonoBehaviour
 
     public void HandleClick()
     {
-        OnClicked?.Invoke(this);
+        Clicked?.Invoke(this);
     }
 }

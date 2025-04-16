@@ -4,7 +4,6 @@ public class CubeFactory : MonoBehaviour
 {
    [SerializeField] private Cube _cubePrefab;
    [SerializeField] private CubeFuze _fuze;
-   [SerializeField] private CubeInitializer _initializer;
 
    public Cube CreateCube(Vector3 position, Vector3 scale, int chance, Vector3 explosionOrigin, bool fuze = true)
    {
@@ -21,12 +20,8 @@ public class CubeFactory : MonoBehaviour
             return cube;
         }
 
-        cube.gameObject.AddComponent<SpawnedCube>();
-
         if (fuze == true)
             _fuze.Explode(rigidbody, explosionOrigin);
-        
-        _initializer.RegisterCube(cube);
 
         return cube;
    }

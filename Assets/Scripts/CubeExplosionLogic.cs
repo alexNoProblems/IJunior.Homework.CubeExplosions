@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CubeExplosionLogic : MonoBehaviour
 {
-    private const int _minRandomChance = 0;
-    private const int _maxRandomChance = 100;
-    private const int _chanceDivisionFactor = 2;
-    private const int _minSeparationChanceValue = 1;
+    private const int MinRandomChance = 0;
+    private const int MaxRandomChance = 100;
+    private const int ChanceDivisionFactor = 2;
+    private const int MinSeparationChanceValue = 1;
 
     private int _separationChance = 100;
 
@@ -16,11 +16,11 @@ public class CubeExplosionLogic : MonoBehaviour
 
     public bool ShouldExplode()
     {
-        return Random.Range(_minRandomChance, _maxRandomChance + 1) < _separationChance;
+        return Random.Range(MinRandomChance, MaxRandomChance + 1) < _separationChance;
     }
 
     public int GetNextChance()
     {
-        return Mathf.Max(_minSeparationChanceValue, _separationChance / _chanceDivisionFactor);
+        return Mathf.Max(MinSeparationChanceValue, _separationChance / ChanceDivisionFactor);
     }
 }

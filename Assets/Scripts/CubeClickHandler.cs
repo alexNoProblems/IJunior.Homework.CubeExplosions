@@ -1,13 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Cube))]
 public class CubeClickHandler : MonoBehaviour
 {
     [SerializeField] private Cube _cube;
 
     private void Awake()
     {
-        if (_cube == null && TryGetComponent(out Cube cube))
-            _cube = cube;
+        _cube = GetComponent<Cube>();
     }
 
     private void OnMouseDown()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
@@ -5,23 +6,27 @@ public class CubeSpawner : MonoBehaviour
     private const int MaxSeparationChance = 100;
 
     [SerializeField] private CubeFactory _factory;
+    [SerializeField] private List<Cube> _initialCubes = new();
     [SerializeField] private float _spawnOffsetRadius = 0.2f;
     [SerializeField] private float _scaleFactor = 0.5f;
     [SerializeField] private int _minCubesNumber = 2;
     [SerializeField] private int _maxCubesNumber = 6;
 
-    public void SpawnInitialCubes(Cube[] cubes)
+    private void Start()
     {
-        foreach (var cube in cubes)
+        foreach (var cube in _initialCubes)
         {
+            if (cube == null)
+                continue;
+            
             cube.Initialize(MaxSeparationChance);
-            cube.OnClicked += HandleCubeClicked;
+            cube.Clicked += HandleCubeClicked;
         }
     }
 
     private void HandleCubeClicked(Cube clickedCube)
     {
-        clickedCube.OnClicked -= HandleCubeClicked;
+        clickedCube.Clicked -= HandleCubeClicked;
 
         if (clickedCube.ExplosionLogic.ShouldExplode() == true)
             SpawnNewCubes(clickedCube);
@@ -42,7 +47,7 @@ public class CubeSpawner : MonoBehaviour
             Vector3 offset = Random.insideUnitSphere * _spawnOffsetRadius;
             Cube newCube = _factory.CreateCube(origin + offset, newScale, newChance, origin);
 
-            newCube.OnClicked += HandleCubeClicked;
+            newCube.Clicked += HandleCubeClicked;
         }
     }
 }
