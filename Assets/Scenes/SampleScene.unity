@@ -291,6 +291,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 225895293}
+  - component: {fileID: 225895298}
+  - component: {fileID: 225895297}
   - component: {fileID: 225895296}
   - component: {fileID: 225895295}
   - component: {fileID: 225895294}
@@ -358,6 +360,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _factory: {fileID: 225895295}
+  _fuze: {fileID: 225895294}
+  _explosionVFXSpawner: {fileID: 225895297}
+  _explosionCalculator: {fileID: 225895298}
   _initialCubes:
   - {fileID: 988175287}
   - {fileID: 1717916681}
@@ -366,6 +371,36 @@ MonoBehaviour:
   _scaleFactor: 0.5
   _minCubesNumber: 2
   _maxCubesNumber: 6
+--- !u!114 &225895297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225895289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1fedd18a6b84a3f86f75890382b0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionVFXPrefab: {fileID: 6106087635193875923, guid: d9d0a471f17b94ae0a82b661059eddd1, type: 3}
+  _explosionVFXLifetime: 2
+--- !u!114 &225895298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225895289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45347b01294c346a286af096dab24ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minExplosionRadius: 4
+  _maxExplosionRadius: 6
+  _minExplosionForce: 8
+  _maxExplosionForce: 15
 --- !u!1001 &267704121
 PrefabInstance:
   m_ObjectHideFlags: 0

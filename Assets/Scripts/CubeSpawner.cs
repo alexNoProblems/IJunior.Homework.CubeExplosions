@@ -6,6 +6,9 @@ public class CubeSpawner : MonoBehaviour
     private const int MaxSeparationChance = 100;
 
     [SerializeField] private CubeFactory _factory;
+    [SerializeField] private CubeAreaExplosion _areaExplosion;
+    [SerializeField] private ExplosionVFXSpawner _explosionVFXSpawner;
+    [SerializeField] private ExplosionCalculator _explosionCalculator;
     [SerializeField] private List<Cube> _initialCubes = new();
     [SerializeField] private float _spawnOffsetRadius = 0.2f;
     [SerializeField] private float _scaleFactor = 0.5f;
@@ -28,8 +31,19 @@ public class CubeSpawner : MonoBehaviour
     {
         clickedCube.Clicked -= HandleCubeClicked;
 
+        Vector3 origin = clickedCube.transform.position;
+        Vector3 scale = clickedCube.transform.localScale;
+
         if (clickedCube.ExplosionLogic.ShouldExplode() == true)
+        {
             SpawnNewCubes(clickedCube);
+        }
+        else
+        {
+            _explosionCalculator.Calculate(scale, out float radius, out float force);
+            _areaExplosion?.ExplodeArea(origin, radius, force);
+            _explosionVFXSpawner?.Spawn(origin);
+        }
 
         Destroy(clickedCube.gameObject);
     }
